@@ -1,4 +1,5 @@
 ---
+
 ---
 
 <div class="search-modal-container">
@@ -82,7 +83,7 @@
     border-radius: var(--radius);
   }
   div.search-result ul > :global(li.selected > a) {
-    background-color: rgba(241, 241, 239, 1);
+    border: solid 1px var(--accents-2);
   }
 
   div.search-result :global(div.search-result-title) {
@@ -244,9 +245,7 @@
       const url = new URL(location.href)
       const port = url.port ? `:${url.port}` : ''
 
-      const res = await fetch(
-        `${url.protocol}//${url.hostname}${port}/feed`
-      )
+      const res = await fetch(`${url.protocol}//${url.hostname}${port}/feed`)
       if (res.status !== 200) {
         console.log(res.status)
         throw new Error('Failed to fetch RSS feed')

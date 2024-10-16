@@ -27,17 +27,17 @@ const siteOGImage = new URL(
 )
 
 let coverImageURL: string
-if (database.Cover) {
-  if (database.Cover.Type === 'external') {
-    coverImageURL = database.Cover.Url
-  } else if (database.Cover.Type === 'file') {
-    try {
-      coverImageURL = filePath(new URL(database.Cover.Url))
-    } catch (err) {
-      console.log('Invalid DB cover image URL')
-    }
-  }
-}
+// if (database.Cover) {
+// if (database.Cover.Type === 'external') {
+coverImageURL = database.Cover.Url
+// } else if (database.Cover.Type === 'file') {
+// try {
+// coverImageURL = filePath(new URL(database.Cover.Url))
+// } catch (err) {
+// console.log('Invalid DB cover image URL')
+// }
+// }
+// }
 
 let customIconURL: string
 if (database.Icon && database.Icon.Type === 'file') {
@@ -49,7 +49,7 @@ if (database.Icon && database.Icon.Type === 'file') {
 }
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -73,6 +73,10 @@ if (database.Icon && database.Icon.Type === 'file') {
       href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
       integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
       crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..800,0..1,0..1,0..1&display=swap"
+      rel="stylesheet"
     />
   </head>
   <body>
@@ -127,14 +131,7 @@ if (database.Icon && database.Icon.Type === 'file') {
 
             <slot name="main" />
 
-            <footer>
-              <div>
-                <span>Powered by&nbsp;</span>
-                <a href="https://github.com/otoyo/astro-notion-blog"
-                  >astro-notion-blog</a
-                >
-              </div>
-            </footer>
+            <footer></footer>
           </div>
         </main>
 
@@ -184,7 +181,7 @@ if (database.Icon && database.Icon.Type === 'file') {
     order: 1;
     width: 300px;
     padding: 20px 20px;
-    background-color: #f4f4f4;
+    background-color: var(--bg-2);
   }
   @media (max-width: 640px) {
     aside {
@@ -216,8 +213,13 @@ if (database.Icon && database.Icon.Type === 'file') {
     padding: 20px 0 20px;
   }
   main header h1 {
-    font-weight: 700;
-    color: #333;
+    /* font-weight: 700; */
+    color: var(--accents-1);
+    --casl: 'CASL' 0;
+    /* Casual: Linear to Casual */
+    --wght: 'wght' 758;
+    /* Weight: Light to ExtraBlack; usually set with `font-weight` */
+    --slnt: 'slnt' -2.7;
   }
   main header h1 a {
     display: block;
@@ -262,7 +264,7 @@ if (database.Icon && database.Icon.Type === 'file') {
     }
   }
   main footer span {
-    color: #777;
+    color: var(--fg);
   }
   main footer a {
     color: inherit;
@@ -277,21 +279,28 @@ if (database.Icon && database.Icon.Type === 'file') {
     --gap: 1rem;
     --gap-double: 2rem;
 
-    --bg: #fff;
-    --fg: #333;
-    --accents-1: #666;
-    --accents-2: #666;
-    --accents-3: #666;
+    --bg: #373042;
+    --bg-2: #1d1727;
+    --fg: #c4fcfc;
+    --accents-1: #36feff;
+    --accents-2: #ffb761;
+    --accents-3: #ffb761;
     --geist-foreground: #000;
     --geist-success: #690;
 
     --radius: 4px;
 
-    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-      'Helvetica Neue', sans-serif;
-    --font-mono: SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono',
-      Courier, monospace;
+    --font-sans: 'Recursive', monospace;
+
+    --mono: 'MONO' 0;
+    /* Monospace: Sans (natural-width) or Mono (fixed-width) */
+    --casl: 'CASL' 0.38;
+    /* Casual: Linear to Casual */
+    --wght: 'wght' 408;
+    /* Weight: Light to ExtraBlack; usually set with `font-weight` */
+    --slnt: 'slnt' 0;
+    /* Slant: 0 to -15 degrees, auto cursive at -14 */
+    --CRSV: 'CRSV' 0.5;
   }
 
   * {
@@ -303,6 +312,8 @@ if (database.Icon && database.Icon.Type === 'file') {
   body {
     padding: 0;
     margin: 0;
+    font-variation-settings: var(--mono), var(--casl), var(--wght), var(--slnt),
+      var(--CRSV);
     font-size: 16px;
   }
 
@@ -310,14 +321,13 @@ if (database.Icon && database.Icon.Type === 'file') {
     min-height: 100vh;
     background: var(--bg);
     color: var(--fg);
-    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Helvetica, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
-      'Hiragino Sans GB', メイリオ, Meiryo, 'Apple Color Emoji', Arial,
-      sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-family: var(--font-sans);
 
     /*background-image: radial-gradient(#ddd 1px, transparent 1px),
       radial-gradient(#ddd 1px, transparent 1px);*/
-    background-position: 0 0, 25px 25px;
+    background-position:
+      0 0,
+      25px 25px;
     background-attachment: fixed;
     background-size: 50px 50px;
 
@@ -354,11 +364,21 @@ if (database.Icon && database.Icon.Type === 'file') {
     color: var(--fg);
     font-size: 2rem;
     font-weight: 700;
+    --casl: 'CASL' 0;
+    /* Casual: Linear to Casual */
+    --wght: 'wght' 758;
+    /* Weight: Light to ExtraBlack; usually set with `font-weight` */
+    --slnt: 'slnt' -2.7;
   }
 
   @media (max-width: 640px) {
     h1 {
       font-size: 1.6rem;
+      --casl: 'CASL' 0;
+      /* Casual: Linear to Casual */
+      --wght: 'wght' 758;
+      /* Weight: Light to ExtraBlack; usually set with `font-weight` */
+      --slnt: 'slnt' -2.7;
     }
   }
 
@@ -370,7 +390,7 @@ if (database.Icon && database.Icon.Type === 'file') {
   }
   p,
   ul {
-    color: #222;
+    color: var(--fg);
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.8rem;
@@ -404,7 +424,7 @@ if (database.Icon && database.Icon.Type === 'file') {
     color: #eb5757;
     padding: 0.25rem;
     border-radius: var(--radius);
-    font-family: var(--font-mono);
+    /* font-family: var(--font-mono); */
   }
 
   table {
