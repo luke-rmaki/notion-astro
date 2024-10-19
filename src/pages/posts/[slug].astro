@@ -100,8 +100,10 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
 >
   <div slot="main" class={styles.main}>
     <div class={styles.post}>
-      <PostDate post={post} />
-      <PostTags post={post} />
+      <span>
+        <PostTags post={post} />
+        <PostDate post={post} />
+      </span>
       <PostTitle post={post} enableLink={false} />
       <PostBody blocks={blocks} />
       <!-- <PostTags post={post} /> -->

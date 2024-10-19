@@ -49,8 +49,10 @@ const [posts, , tags, numberOfPages] = await Promise.all([
       ) : (
         posts.map((post) => (
           <div class={styles.post} key={post.Slug}>
-            <PostDate post={post} />
-            <PostTags post={post} />
+            <span>
+              <PostDate post={post} />
+              <PostTags post={post} />
+            </span>
             <PostTitle post={post} />
             <PostFeaturedImage post={post} />
             <PostExcerpt post={post} />
