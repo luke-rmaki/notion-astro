@@ -116,13 +116,13 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
   </div>
 
   <div slot="aside" class="aside">
-    <BlogPostsLink
+    <!-- <BlogPostsLink
       heading="Posts in the same category:"
       posts={postsHavingSameTag.filter(
         (p: interfaces.Post) => p.Slug !== post.Slug
       )}
     />
-    <br />
+    <br /> -->
     <BlogTagsLink heading="Places" tags={tags} />
   </div>
 </Layout>
